@@ -231,12 +231,15 @@ public class LivyTaskSubmitHelper {
     }
 
     public String postToLivy(String uri) {
+        logger.info("Post To Livy URI is: " + uri);
         String needKerberos = env.getProperty("livy.need.kerberos");
+        logger.info("Need Kerberos:" + needKerberos);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(REQUEST_BY_HEADER,"admin");
 
-        if (needKerberos == null) {
+        if (needKerberos == null || needKerberos.isEmpty()) {
             logger.error("The property \"livy.need.kerberos\" is empty");
             return null;
         }
@@ -274,9 +277,11 @@ public class LivyTaskSubmitHelper {
     }
 
     public String getFromLivy(String uri) {
+        logger.info("Get From Livy URI is: " + uri);
         String needKerberos = env.getProperty("livy.need.kerberos");
+        logger.info("Need Kerberos:" + needKerberos);
 
-        if (needKerberos == null) {
+        if (needKerberos == null || needKerberos.isEmpty()) {
             logger.error("The property \"livy.need.kerberos\" is empty");
             return null;
         }
@@ -298,9 +303,11 @@ public class LivyTaskSubmitHelper {
     }
 
     public void deleteByLivy(String uri) {
+        logger.info("Delete by Livy URI is: " + uri);
         String needKerberos = env.getProperty("livy.need.kerberos");
+        logger.info("Need Kerberos:" + needKerberos);
 
-        if (needKerberos == null) {
+        if (needKerberos == null || needKerberos.isEmpty()) {
             logger.error("The property \"livy.need.kerberos\" is empty");
             return;
         }

@@ -84,6 +84,10 @@ under the License.
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <exclusions>
                 <exclusion>
@@ -111,16 +115,16 @@ under the License.
             <artifactId>org.eclipse.persistence.jpa</artifactId>
             <version>${eclipselink.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <version>${postgresql.version}</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.java.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<version>${mysql.java.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -146,6 +150,10 @@ under the License.
                 <exclusion>
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -195,6 +203,10 @@ under the License.
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>servlet-api-2.5</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -203,6 +215,12 @@ under the License.
             <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
             <version>${confluent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--schedule-->
@@ -261,6 +279,14 @@ under the License.
     </dependencies>
     <profiles>
         <!--if you need mysql, please uncomment mysql-connector-java -->
+        <!--<profile>-->
+        <!--<id>mysql</id>-->
+        <!--<activation>-->
+        <!--<property>-->
+        <!--<name>mysql</name>-->
+        <!--</property>-->
+        <!--</activation>-->
+        <!--</profile>-->
         <profile>
             <id>dev</id>
             <activation>
@@ -270,22 +296,14 @@ under the License.
             </activation>
         </profile>
         <profile>
-            <id>mysql</id>
+            <id>postgresql</id>
             <activation>
-            <property>
-                <name>mysql</name>
-            </property>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>prod</name>
+                </property>
             </activation>
         </profile>
-<!--        <profile>-->
-<!--            <id>postgresql</id>-->
-<!--            <activation>-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--                <property>-->
-<!--                    <name>prod</name>-->
-<!--                </property>-->
-<!--            </activation>-->
-<!--        </profile>-->
     </profiles>
     <build>
         <plugins>

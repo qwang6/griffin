@@ -25,10 +25,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -131,12 +128,10 @@ public class HiveMetaStoreServiceJdbcImpl implements HiveMetaStoreService {
     @Override
     @Cacheable(unless = "#result==null")
     public Map<String, List<String>> getAllTableNames() {
-        // If there has a lots of databases in Hive, this method will lead to Griffin crash
         Map<String, List<String>> res = new HashMap<>();
-        for (String dbName : getAllDatabases()) {
-            List<String> list = (List<String>) queryHiveString(SHOW_TABLES_IN + dbName);
-            res.put(dbName, list);
-        }
+
+        List<String> list = new ArrayList<>(Arrays.asList("merch_data", "merch_summary_ext_v3", "pl_data", "plmerch_data"));
+        res.put("default", list);
         return res;
     }
 
